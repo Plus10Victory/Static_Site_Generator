@@ -1,4 +1,5 @@
-from textnode import *
+from textnode import TextType, TextNode
+from htmlnode import HTMLNode
 
 def main():
     sample_text = "This is a text node"
@@ -8,6 +9,5 @@ def main():
     sample_node = TextNode(sample_text, sample_type, sample_url)
     
     print(sample_node.__repr__())
-
 
 main()
