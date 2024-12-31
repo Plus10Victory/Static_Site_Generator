@@ -1,6 +1,6 @@
 import unittest
 
-from textnode import TextNode, TextType
+from textnode import TextNode, TextType, text_node_to_html_node
 
 
 class TestTextNode(unittest.TestCase):
@@ -28,6 +28,20 @@ class TestTextNode(unittest.TestCase):
         node = TextNode("This is a text node", TextType.TEXT, "https://www.coffee.com")
         self.assertEqual(
             "TextNode(This is a text node, text, https://www.coffee.com)", repr(node)
+        )
+
+
+class TestTextNodeToHTMLNode(unittest.TestCase):
+    def test_link(self):
+        text_node = TextNode(
+            "click here", 
+            TextType.LINK, 
+            url="https://www.links.com"
+        )
+        html_node = text_node_to_html_node(text_node)
+        self.assertEqual(
+            html_node.to_html(),
+            '<a href="https://www.links.com">click here</a>'
         )
 
 
