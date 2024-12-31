@@ -28,7 +28,7 @@ class LeafNode(HTMLNode):
         value = self.value
         props = super().props_to_html()
         if value is None:
-            raise ValueError("leaf nodes must have a value")
+            raise ValueError("Invalid HTML: no value")
         if tag == None:
             return value
         return f"<{tag}{props}>{value}</{tag}>"
@@ -36,3 +36,17 @@ class LeafNode(HTMLNode):
     def __repr__(self):
         return f"LeafNode({self.tag}, {self.value}, {self.props})"
         
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag, None, children, props)
+    
+    def to_html(self):
+        if self.tag == None:
+            raise ValueError("Invalid HTML: no tag")
+        if self.children == None:
+            raise ValueError("Invalid HTML: no children")
+        inner_html = ''.join(list(map(lambda x: x.to_html(), self.children)))
+        return f"<{self.tag}>{inner_html}</{self.tag}>"
+
+    def __repr__(self):
+        return f"ParentNode({self.tag}, children: {self.children}, {self.props})"
